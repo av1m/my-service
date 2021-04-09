@@ -1,0 +1,52 @@
+{
+  "name": "my-service-api",
+  "version": "0.0.1",
+  "description": "Backend of the application allowing sharing its services",
+  "devDependencies": {
+    "@types/chai": "^4.2.16",
+    "@types/express": "^4.17.11",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^14.14.37",
+    "chai": "^4.3.4",
+    "gts": "^3.1.0",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
+    "prettier": "2.2.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.10",
+    "@types/jsonwebtoken": "^8.5.1",
+    "bcryptjs": "^2.4.3",
+    "class-validator": "^0.13.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.6",
+    "reflect-metadata": "^0.1.13",
+    "ts-node-dev": "^1.1.6",
+    "typeorm": "0.2.32"
+  },
+  "scripts": {
+    "preinstall": "cp -u .env.example .env",
+    "format:write": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
+    "test": "mocha -r ts-node/register test/**/*.test.ts",
+    "tsc": "tsc",
+    "start": "ts-node ./src/index.ts",
+    "nodemon": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  },
+  "files": []
+}
