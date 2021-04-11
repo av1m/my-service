@@ -19,8 +19,7 @@ class AuthController {
     const errors = await validate(user);
     console.log(errors);
     if (errors.length > 0) {
-      res.status(400).send(errors);
-      return;
+      return res.status(400).send(errors);
     }
 
     //Hash the password, to securely store on DB
@@ -31,19 +30,18 @@ class AuthController {
     try {
       await userRepository.save(user);
     } catch (e) {
-      res.status(409).send({error: 'mail already in use'});
-      return;
+      return res.status(409).send({error: 'mail already in use'});
     }
 
     //If all ok, send 201 response
-    res.status(201).send({success: 'User created'});
+    return res.status(201).send({success: 'User created'});
   };
 
   static login = async (req: Request, res: Response) => {
     //Check if mail and password are set
     const {email, password} = req.body;
     if (!(email && password)) {
-      res.status(400).send();
+      return res.status(400).send();
     }
 
     //Get user from database
@@ -52,12 +50,11 @@ class AuthController {
     try {
       user = await userRepository.findOneOrFail({where: {email: email}});
     } catch (error) {
-      res.status(401).send();
+      return res.status(401).send();
     }
 
     if (!user || !user.checkIfUnencryptedPasswordIsValid(password)) {
-      res.status(401).send();
-      return;
+      return res.status(401).send();
     }
 
     //Sing JWT, valid for 1 hour
@@ -68,7 +65,7 @@ class AuthController {
     );
 
     //Send the jwt in the response
-    res.send({token: token});
+    return res.send({token: token});
   };
 
   static changePassword = async (req: Request, res: Response) => {
@@ -78,7 +75,7 @@ class AuthController {
     //Get parameters from the body
     const {oldPassword, newPassword} = req.body;
     if (!(oldPassword && newPassword)) {
-      res.status(400).send();
+      return res.status(400).send();
     }
 
     //Get user from the database
@@ -87,27 +84,25 @@ class AuthController {
     try {
       user = await userRepository.findOneOrFail(id);
     } catch (id) {
-      res.status(401).send();
+      return res.status(401).send();
     }
 
     //Check if old password matchs
     if (!user || !user.checkIfUnencryptedPasswordIsValid(oldPassword)) {
-      res.status(401).send();
-      return;
+      return res.status(401).send();
     }
 
     //Validate de model (password lenght)
     user.password = newPassword;
     const errors = await validate(user);
     if (errors.length > 0) {
-      res.status(400).send(errors);
-      return;
+      return res.status(400).send(errors);
     }
     //Hash the new password and save
     user.hashPassword();
     userRepository.save(user);
 
-    res.status(204).send();
+    return res.status(204).send();
   };
 }
 export default AuthController;

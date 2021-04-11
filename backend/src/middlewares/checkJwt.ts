@@ -38,6 +38,5 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   res.setHeader('token', newToken);
 
   //Call the next middleware or controller
-  next();
-  return;
+  return next();
 };

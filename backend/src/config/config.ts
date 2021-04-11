@@ -4,7 +4,7 @@ import dotenv = require('dotenv');
 dotenv.config();
 
 export default {
-  jwtSecret: '@QEGTUI',
+  jwtSecret: process.env.JWT_SECRET || 'TEST',
 };
 
 export const db: ConnectionOptions = {

@@ -4,16 +4,25 @@ import {validate} from 'class-validator';
 
 import {User} from '../entity/User';
 
+const userFields: (keyof User)[] = [
+  'id',
+  'email',
+  'role',
+  'createdAt',
+  'updatedAt',
+  'notes',
+];
+
 class UserController {
   static listAll = async (req: Request, res: Response) => {
     //Get users from database
     const userRepository = getRepository(User);
     const users = await userRepository.find({
-      select: ['id', 'email', 'role'], //We dont want to send the passwords on response
+      select: userFields,
     });
 
     //Send the users object
-    res.send(users);
+    return res.send(users);
   };
 
   static getOneById = async (req: Request, res: Response) => {
@@ -24,11 +33,11 @@ class UserController {
     const userRepository = getRepository(User);
     try {
       const user = await userRepository.findOneOrFail(id, {
-        select: ['id', 'email', 'role'], //We dont want to send the password on response
+        select: userFields,
       });
-      res.send(user);
+      return res.send(user);
     } catch (error) {
-      res.status(404).send('User not found');
+      return res.status(404).send('User not found');
     }
   };
 
@@ -43,8 +52,7 @@ class UserController {
     //Validade if the parameters are ok
     const errors = await validate(user);
     if (errors.length > 0) {
-      res.status(400).send(errors);
-      return;
+      return res.status(400).send(errors);
     }
 
     //Hash the password, to securely store on DB
@@ -55,12 +63,11 @@ class UserController {
     try {
       await userRepository.save(user);
     } catch (e) {
-      res.status(409).send('mail already in use');
-      return;
+      return res.status(409).send('mail already in use');
     }
 
     //If all ok, send 201 response
-    res.status(201).send('User created');
+    return res.status(201).send('User created');
   };
 
   static editUser = async (req: Request, res: Response) => {
@@ -68,7 +75,7 @@ class UserController {
     const id = req.params.id;
 
     //Get values from the body
-    const {email, role} = req.body;
+    const {email, role, notes} = req.body;
 
     //Try to find user on database
     const userRepository = getRepository(User);
@@ -77,13 +84,13 @@ class UserController {
       user = await userRepository.findOneOrFail(id);
     } catch (error) {
       //If not found, send a 404 response
-      res.status(404).send('User not found');
-      return;
+      return res.status(404).send('User not found');
     }
 
     //Validate the new valuexs on model
     user.email = email ?? user.email;
     user.role = role ?? user.role;
+    user.notes = notes ?? user.notes;
     const errors = await validate(user);
     if (errors.length > 0) {
       res.status(400).send(errors);
@@ -94,11 +101,10 @@ class UserController {
     try {
       await userRepository.save(user);
     } catch (e) {
-      res.status(409).send('mail already in use');
-      return;
+      return res.status(409).send('mail already in use');
     }
     //After all send a 204 (no content, but accepted) response
-    res.status(204).send();
+    return res.status(204).send();
   };
 
   static deleteUser = async (req: Request, res: Response) => {
@@ -109,13 +115,12 @@ class UserController {
     try {
       await userRepository.findOneOrFail(id);
     } catch (error) {
-      res.status(404).send('User not found');
-      return;
+      return res.status(404).send('User not found');
     }
     userRepository.delete(id);
 
     //After all send a 204 (no content, but accepted) response
-    res.status(204).send();
+    return res.status(204).send();
   };
 }
 
