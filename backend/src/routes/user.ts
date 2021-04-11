@@ -6,27 +6,30 @@ import {checkRole} from '../middlewares/checkRole';
 
 const router = Router();
 
-//Get all users
-router
-  .route('/')
-  .get([checkJwt, checkRole([UserRole.ADMIN])], UserController.listAll)
-  .post([checkJwt, checkRole([UserRole.ADMIN])], UserController.newUser);
+router.all('*', checkJwt);
 
-router.all('/me/', [checkJwt], (req: Request, res: Response) =>
-  res.redirect('/user/' + res.locals.jwtPayload.userId)
+// Redirect the current user to 'user by id' specifying his ID
+router.all('/me/', (req: Request, res: Response) =>
+  res.redirect(307, '/user/' + res.locals.jwtPayload.userId)
 );
 
-// Get one user
+// All users
+router
+  .route('/')
+  .get([checkRole([UserRole.ADMIN])], UserController.listAll)
+  .post([checkRole([UserRole.ADMIN])], UserController.newUser);
+
+// User by ID
 router
   .route('/:id/')
   .get(
-    [checkJwt, checkRole([UserRole.ADMIN, UserRole.EDITOR])],
+    [checkRole([UserRole.ADMIN, UserRole.EDITOR])],
     UserController.getOneById
   )
   .patch(
-    [checkJwt, checkRole([UserRole.EDITOR, UserRole.ADMIN])],
+    [checkRole([UserRole.EDITOR, UserRole.ADMIN])],
     UserController.editUser
   )
-  .delete([checkJwt, checkRole([UserRole.ADMIN])], UserController.deleteUser);
+  .delete([checkRole([UserRole.ADMIN])], UserController.deleteUser);
 
 export default router;
