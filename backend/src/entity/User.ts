@@ -33,6 +33,12 @@ export class User {
   @Length(4, 100)
   password: string;
 
+  @Column()
+  lastname: string;
+
+  @Column()
+  firstname: string;
+
   @Column({
     type: 'enum',
     enum: UserRole,
@@ -52,7 +58,10 @@ export class User {
   @Column()
   notes: string;
 
-  @OneToMany(() => Service, service => service.user)
+  @Column()
+  photos: string;
+
+  @Column(type => Service)
   services: Service[];
 
   hashPassword() {

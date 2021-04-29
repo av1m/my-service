@@ -6,14 +6,16 @@ import {validate} from 'class-validator';
 import {User, UserRole} from '../entity/User';
 import config from '../config/config';
 
-class AuthController {
+abstract class AuthController {
   static register = async (req: Request, res: Response) => {
     //Get parameters from the body
-    const {email, password} = req.body;
+    const {email, password, firstname, lastname} = req.body;
     const user = new User();
-    user.email = email;
+    user.email = email.toLowerCase();
     user.password = password;
     user.role = UserRole.EDITOR;
+    user.firstname = firstname;
+    user.lastname = lastname;
 
     //Validade if the parameters are ok
     const errors = await validate(user);
@@ -48,13 +50,16 @@ class AuthController {
     const userRepository = getRepository(User);
     let user: User | undefined = undefined;
     try {
-      user = await userRepository.findOneOrFail({where: {email: email}});
+      user = await userRepository.findOneOrFail({
+        where: {email: email.toLowerCase()},
+      });
     } catch (error) {
+      console.log(error);
       return res.status(401).send();
     }
 
     if (!user || !user.checkIfUnencryptedPasswordIsValid(password)) {
-      return res.status(401).send();
+      return res.status(401).send('Invalid password!');
     }
 
     //Sing JWT, valid for 1 hour
@@ -64,8 +69,11 @@ class AuthController {
       {expiresIn: '1h'}
     );
 
+    // Give that we return the user, we delete the password
+    user.password = '';
+
     //Send the jwt in the response
-    return res.send({token: token});
+    return res.send({token: token, user: user});
   };
 
   static changePassword = async (req: Request, res: Response) => {

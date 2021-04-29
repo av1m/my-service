@@ -4,22 +4,11 @@ import {validate} from 'class-validator';
 
 import {User} from '../entity/User';
 
-const userFields: (keyof User)[] = [
-  'id',
-  'email',
-  'role',
-  'createdAt',
-  'updatedAt',
-  'notes',
-];
-
-class UserController {
+abstract class UserController {
   static listAll = async (req: Request, res: Response) => {
     //Get users from database
     const userRepository = getRepository(User);
-    const users = await userRepository.find({
-      select: userFields,
-    });
+    const users = await userRepository.find();
 
     //Send the users object
     return res.send(users);
@@ -32,10 +21,8 @@ class UserController {
     //Get the user from database
     const userRepository = getRepository(User);
     try {
-      const user = await userRepository.findOneOrFail(id, {
-        select: userFields,
-      });
-      return res.send(user);
+      const user = await userRepository.findOneOrFail(id);
+      return res.status(200).send(user);
     } catch (error) {
       return res.status(404).send('User not found');
     }
@@ -71,13 +58,13 @@ class UserController {
   };
 
   static editUser = async (req: Request, res: Response) => {
-    //Get the ID from the url
+    // Get the ID from the url
     const id = req.params.id;
 
-    //Get values from the body
-    const {email, role, notes} = req.body;
+    // Get values from the body
+    const {email, role, notes, firstname, lastname} = req.body;
 
-    //Try to find user on database
+    // Try to find user on database
     const userRepository = getRepository(User);
     let user: User;
     try {
@@ -91,6 +78,8 @@ class UserController {
     user.email = email ?? user.email;
     user.role = role ?? user.role;
     user.notes = notes ?? user.notes;
+    user.firstname = firstname ?? user.firstname;
+    user.lastname = lastname ?? user.lastname;
     const errors = await validate(user);
     if (errors.length > 0) {
       res.status(400).send(errors);
