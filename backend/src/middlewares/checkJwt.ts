@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from 'express';
 import * as jwt from 'jsonwebtoken';
-import {ObjectID} from 'typeorm';
+import {ObjectID} from 'mongodb';
 import config from '../config/config';
 
 export interface TokenInterface {
@@ -20,20 +20,20 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   const token = bearerHeader.split(' ')[1];
   let jwtPayload: TokenInterface;
 
-  //Try to validate the token and get data
+  // Try to validate the token and get data
   try {
     jwtPayload = <TokenInterface>jwt.verify(token, config.jwtSecret);
     res.locals.jwtPayload = jwtPayload;
   } catch (error) {
-    //If token is not valid, respond with 401 (unauthorized)
+    // If token is not valid, respond with 401 (unauthorized)
     return res.status(401).send();
   }
 
-  //The token is valid for 1 hour
-  //We want to send a new token on every request
+  // The token is valid for 1 day
+  // We want to send a new token on every request
   const {userId, email} = jwtPayload;
   const newToken = jwt.sign({userId, email}, config.jwtSecret, {
-    expiresIn: '1h',
+    expiresIn: '1d',
   });
   res.setHeader('token', newToken);
 

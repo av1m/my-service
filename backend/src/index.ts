@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import {createConnection} from 'typeorm';
 import express = require('express');
 import helmet = require('helmet');
 import cors = require('cors');
@@ -7,22 +6,22 @@ import routes from './routes';
 import * as config from './config/config';
 
 // Connects to the Database -> then starts the express
-createConnection(config.db)
-  .then(async () => {
-    // Create a new express application instance
-    const app = express();
+config.InitiateMongoServer();
 
-    // Call midlewares
-    app.use(cors());
-    app.use(helmet());
-    app.use(express.json());
-    app.use(express.urlencoded({extended: true}));
+// Create a new express application instance
+const app = express();
 
-    // Set all routes from routes folder
-    app.use('/', routes);
+// Call midlewares
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
-    app.listen(3000, () => {
-      console.log('Server started on port 3000!');
-    });
-  })
-  .catch(error => console.log(error));
+// Set all routes from routes folder
+app.use('/', routes);
+// Serve static files
+app.use('/static', express.static('uploads'));
+
+app.listen(3000, () => {
+  console.log('Server started on port 3000! 👂');
+});
