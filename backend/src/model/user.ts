@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema(
       lowercase: true,
       required: true,
       match: [
-        /([a-z0-9_\-\.])+@([a-z0-9_\-\.])+\.([a-z0-9])+/i,
+        /([a-z0-9_\-.])+@([a-z0-9_\-.])+\.([a-z0-9])+/i,
         'No email found ({VALUE})',
       ],
     },

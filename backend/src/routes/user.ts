@@ -2,7 +2,6 @@ import {Request, Response, Router} from 'express';
 import UserController from '../controllers/user';
 import {checkJwt} from '../middlewares/checkJwt';
 import {checkObjectId} from '../middlewares/checkObjectId';
-import {checkRight} from '../middlewares/checkRight';
 
 const router = Router();
 
