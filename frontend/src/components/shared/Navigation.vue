@@ -3,7 +3,7 @@
     <v-navigation-drawer v-model="drawer" app>
       <v-list nav shaped>
         <v-list-item-group v-model="group" active-class="primary main--text">
-          <v-list-item to="/">
+          <v-list-item to="/home">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
@@ -50,7 +50,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <router-link to="/">
+        <router-link to="/home">
           <v-img max-width="250" src="@/assets/logo.png" />
         </router-link>
       </v-toolbar-title>
@@ -85,6 +85,14 @@
             <v-icon v-else @click="darkMode">mdi-white-balance-sunny</v-icon>
           </template>
           <span>Change theme</span>
+        </v-tooltip>
+      </v-btn>
+      <v-btn icon v-if="!isLogged" to="/login">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon v-bind="attrs" v-on="on">mdi-login </v-icon>
+          </template>
+          <span>Login</span>
         </v-tooltip>
       </v-btn>
       <v-menu

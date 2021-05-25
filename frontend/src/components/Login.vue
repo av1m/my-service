@@ -88,6 +88,7 @@
 <script lang="ts">
 import { VForm } from "@/store/types";
 import Vue from "vue";
+import { RawLocation } from "vue-router";
 import { mapActions, mapGetters } from "vuex";
 
 export default Vue.extend({
@@ -125,7 +126,7 @@ export default Vue.extend({
   created: function () {
     if (this.isLogged)
       this.$router
-        .push("/")
+        .push((this.$route.query?.redirect || "/home") as RawLocation)
         .catch((err) =>
           this.$store.dispatch(
             "alert/error",

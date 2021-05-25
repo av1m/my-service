@@ -7,6 +7,7 @@ import User from "@/components/User.vue";
 import AddService from "@/components/AddService.vue";
 import Login from "@/components/Login.vue";
 import Subscription from "@/components/Subscription.vue";
+import Guest from "@/components/Guest.vue";
 import NotFound from "@/components/NotFound.vue";
 import store from "@/store/index";
 
@@ -19,6 +20,11 @@ store.commit("read");
 const routes: Array<RouteConfig> = [
   {
     path: "/",
+    name: "Guest",
+    component: Guest,
+  },
+  {
+    path: "/home",
     name: "Home",
     component: Home,
     meta: {
@@ -104,7 +110,10 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!store.getters["user/isLogged"]) {
-      next({ name: "Login" });
+      next({
+        name: "Login",
+        query: { redirect: to.fullPath },
+      });
     } else {
       next(); // go to wherever I'm going
     }

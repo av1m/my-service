@@ -2,7 +2,8 @@
   <v-hover v-slot="{ hover }">
     <v-card rounded="xl" :hover="hover">
       <v-img
-        height="250"
+        contain
+        max-height="250"
         v-bind:src="loadPhoto(item.photo)"
         gradient="to top right, rgba(100,80,80,.3), rgba(100,100,100,.1)"
         lazy-src="https://picsum.photos/id/11/100/60"
@@ -25,6 +26,7 @@
             </template>
             <v-card>
               <v-img
+                contain
                 v-bind:src="loadPhoto(item.photo)"
                 lazy-src="https://picsum.photos/id/11/100/60"
                 ><v-btn

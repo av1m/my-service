@@ -1,5 +1,4 @@
 <template>
-  <!--https://stackoverflow.com/questions/61134607/how-to-do-autocomplete-suggestion-search-bar-in-vuejs -->
   <v-autocomplete
     v-model="model"
     :loading="loading"
@@ -21,7 +20,6 @@
     flat
     item-text="search"
     item-value="_id"
-    v-if="this.isLogged"
     color="primary"
     background-color="background"
     ><!--cache-items-->
@@ -67,7 +65,6 @@ export default Vue.extend({
   }),
   computed: {
     ...mapState("user", ["search"]),
-    ...mapGetters("user", ["isLogged"]),
     ...mapGetters("utils", ["loadPhoto"]),
     getSearch: function () {
       if (!this.search || this.search.length == 0) return [];

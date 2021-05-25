@@ -189,7 +189,7 @@ export default Vue.extend({
               this.$store.dispatch("alert/success", "User created!", {
                 root: true,
               });
-              this.$router.push("/");
+              this.$router.push("/home");
             });
           }
         });

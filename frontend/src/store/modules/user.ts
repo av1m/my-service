@@ -7,6 +7,7 @@ import router from "@/router";
 import { loginType } from "@/api/types";
 import { AxiosResponse } from "axios";
 import { isUserState } from "@/store/types";
+import { RawLocation } from "vue-router";
 
 const user: Module<any, RootStore> = {
   namespaced: true,
@@ -65,7 +66,9 @@ const user: Module<any, RootStore> = {
           dispatch("alert/success", "The user has been connected", {
             root: true,
           });
-          router.push("/");
+          router.push(
+            (router.currentRoute.query?.redirect || "/home") as RawLocation
+          );
         },
         (error: any) => {
           commit("loginFailure", error);
