@@ -10,6 +10,7 @@ export interface IUser extends mongoose.Document {
   role: string;
   profile?: string;
   services?: [IService];
+  payments?: [mongoose.Schema.Types.ObjectId];
   checkIfUnencryptedPasswordIsValid(unencryptedPassword: string): boolean;
 }
 
@@ -45,6 +46,11 @@ const UserSchema = new mongoose.Schema(
     },
     services: {
       type: [ServiceSchema],
+      default: () => [],
+    },
+    payments: {
+      type: [mongoose.Types.ObjectId],
+      ref: 'User',
       default: () => [],
     },
   },

@@ -2,7 +2,7 @@ import { Module } from "vuex";
 import store from "@/store/index";
 import { IUser, RootStore, ServiceState } from "../types";
 import { changePassword, login } from "@/api/auth";
-import { getSearch, getUser, updateUser } from "@/api/users";
+import { getSearch, getUser, updateUser, subscribeService } from "@/api/users";
 import router from "@/router";
 import { loginType } from "@/api/types";
 import { AxiosResponse } from "axios";
@@ -104,6 +104,17 @@ const user: Module<any, RootStore> = {
         });
       });
     },
+    subscribeService({ commit }, id: string) {
+      subscribeService({ id: id }).catch(() => {
+        store.dispatch(
+          "alert/error",
+          "An error occurred while registering the payment",
+          {
+            root: true,
+          }
+        );
+      });
+    },
   },
   getters: {
     isLogged: (state): boolean =>
@@ -115,6 +126,8 @@ const user: Module<any, RootStore> = {
     getUser: (state): IUser => state.user,
     getServiceIds: (state): string[] =>
       state.user.services.map((s: ServiceState) => s.serviceId),
+    belongUserPayment: (state) => (id: string) =>
+      id && state.user.payments.indexOf(id) !== -1,
   },
 };
 

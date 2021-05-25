@@ -15,6 +15,7 @@
       <template v-slot:action="{ attrs }">
         <v-btn
           text
+          icon
           :color="type"
           v-bind="attrs"
           @click="
@@ -22,7 +23,7 @@
             show = false;
           "
         >
-          Close
+          <v-icon>mdi-close</v-icon>
         </v-btn>
       </template>
     </v-snackbar>

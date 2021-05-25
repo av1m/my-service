@@ -16,6 +16,12 @@
             </v-list-item-icon>
             <v-list-item-title>Account</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/subscription" v-if="isLogged">
+            <v-list-item-icon>
+              <v-icon>mdi-ballot</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Subscriptions</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
       <template v-slot:append>

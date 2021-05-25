@@ -45,7 +45,7 @@
             transition="slide-x-transition"
             bottom
             left
-            v-if="belongAuthUser(item.serviceId)"
+            v-if="isCurrentUser"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon color="white" v-bind="attrs" v-on="on">
@@ -112,7 +112,18 @@
         </div>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" rounded text>Subscribe</v-btn>
+        <div v-if="!isCurrentUser">
+          <v-btn
+            color="primary"
+            rounded
+            text
+            @click="show = !show"
+            v-if="!belongUserPayment(item.serviceId)"
+          >
+            Subscribe
+          </v-btn>
+          <v-btn v-else color="success" rounded text> Subscribed </v-btn>
+        </div>
 
         <v-spacer></v-spacer>
 
@@ -124,7 +135,7 @@
         <div v-show="show">
           <v-divider></v-divider>
           <v-card-text>
-            {{ item.description }}
+            <Subscribe :service="item"></Subscribe>
           </v-card-text>
         </div>
       </v-expand-transition>
@@ -135,8 +146,10 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapGetters } from "vuex";
+import Subscribe from "@/components/Subscribe.vue";
 
 export default Vue.extend({
+  components: { Subscribe },
   filters: {
     uppercase: (str: string) => str?.toUpperCase(),
     truncate: (source: string, size: number): string =>
@@ -152,13 +165,18 @@ export default Vue.extend({
   data: () => ({
     show: false,
     dialog: false,
+    isCurrentUser: false,
   }),
   computed: {
+    ...mapGetters("user", ["belongUserPayment"]),
     ...mapGetters("service", ["belongAuthUser"]),
     ...mapGetters("utils", ["loadPhoto"]),
   },
   methods: {
     ...mapActions("service", ["deleteService"]),
+  },
+  created() {
+    this.isCurrentUser = this.belongAuthUser(this.item.serviceId);
   },
 });
 </script>

@@ -129,7 +129,10 @@
                 @click:append-outer="changeMyPassword()"
               ></v-text-field> </v-col
           ></v-row>
-          <h2 class="pb-5">Services</h2>
+          <h2 class="pb-5">Subscriptions</h2>
+          You can see all your subscriptions
+          <router-link to="/subscription">in the dedicated page</router-link>
+          <h2 class="pt-5 pb-5">Services</h2>
           <div v-if="this.user.services.length > 0">
             <div v-for="(item, index) in this.getServices" :key="index">
               <Service

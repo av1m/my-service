@@ -15,14 +15,16 @@ class ServiceController {
     //Get the user from database
     await User.find(
       {
-        'services.servi': id,
+        'services._id': id,
       },
       {'services.$': 1},
       null,
       (err: CallbackError, result) => {
-        return err
-          ? res.status(404).send('User not found')
-          : res.status(200).send(returnUserId ? result[0] : result[0].services);
+        return err || !result[0]
+          ? res.status(404).send('Service not found')
+          : res
+              .status(200)
+              .send(returnUserId ? result[0] : result[0]?.services);
       }
     ).exec();
     return;
@@ -34,7 +36,7 @@ class ServiceController {
     // Check that the id is good!
     const serviceId: string = req.params.id;
     const user = await User.find({'services._id': serviceId}).exec();
-    if (!user) return res.status(404).send('User not found');
+    if (!user) return res.status(404).send('Service not found');
     const service: IService | undefined = user[0]?.services?.filter(
       (service: any) => service._id.toString() === serviceId
     )[0];

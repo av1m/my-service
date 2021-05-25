@@ -27,4 +27,18 @@ const upload = (data: FormData): Promise<AxiosResponse> => {
   return httpClient.post(`${END_POINT}upload/`, data, config);
 };
 
-export { getAllUsers, getUser, getSearch, updateUser, upload };
+const subscribeService = (payload: { id: string }): Promise<AxiosResponse> =>
+  httpClient.post(`${END_POINT}payment`, payload);
+
+const getSubscribed = (): Promise<AxiosResponse> =>
+  httpClient.get(`${END_POINT}payment`);
+
+export {
+  getAllUsers,
+  getUser,
+  getSearch,
+  updateUser,
+  upload,
+  subscribeService,
+  getSubscribed,
+};

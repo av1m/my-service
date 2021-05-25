@@ -6,6 +6,7 @@ import Account from "@/components/Account.vue";
 import User from "@/components/User.vue";
 import AddService from "@/components/AddService.vue";
 import Login from "@/components/Login.vue";
+import Subscription from "@/components/Subscription.vue";
 import NotFound from "@/components/NotFound.vue";
 import store from "@/store/index";
 
@@ -67,6 +68,14 @@ const routes: Array<RouteConfig> = [
     name: "Register",
     component: () =>
       import(/* webpackChunkName: "signup" */ "../components/Register.vue"),
+  },
+  {
+    path: "/subscription",
+    name: "Subscription",
+    component: Subscription,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/404",

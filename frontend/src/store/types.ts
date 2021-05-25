@@ -25,6 +25,7 @@ export interface IUser {
   profile?: string;
   token?: string;
   services?: [ServiceState];
+  payments?: [string];
 }
 export interface UserState extends RootStore {
   user: IUser;

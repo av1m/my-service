@@ -6,6 +6,6 @@ export const checkObjectId = (
   res: Response,
   next: NextFunction
 ) => {
-  const id = req.params.id;
+  const id = req.params.id ?? req.body.id;
   return ObjectId.isValid(id) ? next() : res.status(400).send('Invalid ID');
 };

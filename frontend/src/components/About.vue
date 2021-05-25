@@ -1,84 +1,76 @@
 <template>
   <div>
-    <div v-for="(color, i) in colors" :key="i" class="ma-5">
-      <v-card :color="color" class="pl-6">{{ color }}</v-card>
-    </div>
-
-    <form enctype="multipart/form-data">
-      <input
-        type="file"
-        accept="image/*"
-        @change="uploadImage($event)"
-        id="file-input"
-        name="picture"
-      />
-    </form>
-    <v-form ref="form" v-model="valid" lazy-validation>
-      <v-file-input
-        ref="filephoto"
-        v-model="filephoto"
-        outlined
-        accept="image/*"
-        label="Choose a photo for service"
-        truncate-length="15"
-        prepend-icon="mdi-camera"
-        :rules="[
-          (value) =>
-            (filephoto && filephoto.size < 2000000) ||
-            'Photo size should be less than 2 MB!',
-        ]"
-      ></v-file-input>
-      <v-btn color="primary" @click="submit_2" :disabled="!valid">
-        Continue
-      </v-btn>
-    </v-form>
+    <v-card>
+      <v-expand-transition>
+        <div v-show="show">
+          <v-divider></v-divider>
+          <v-card-text>
+            
+          </v-card-text>
+        </div>
+      </v-expand-transition>
+    </v-card>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { upload } from "@/api/services";
-import { VForm } from "@/store/types";
-import { mapActions } from "vuex";
 
 export default Vue.extend({
   data: () => ({
-    filephoto: null as null | string | Blob,
-    valid: true,
-    colors: [
-      "primary",
-      "accent",
-      "secondary",
-      "success",
-      "info",
-      "warning",
-      "error",
-      "background",
-      "main",
-    ],
-  }),
-  methods: {
-    ...mapActions("user/", ["logout"]),
-    submit_2() {
-      const valid_file = (this.$refs.filephoto as VForm)?.validate() ?? false;
-      console.log(this.filephoto);
-      console.info(this.$refs);
-      const x = false;
-      if (x && valid_file && this.filephoto) {
-        console.log(this.filephoto);
-        let data = new FormData();
-        data.append("image", this.filephoto);
-        upload("609563dc3d8bd80018cd3a7c", data)
-          .then(() => this.$store.commit("alert/success", "Uploaded"))
-          .catch(() => this.$store.commit("alert/error", "Cant upload"));
-      }
+    show: true,
+    loaded: false,
+    paidFor: false,
+    product: {
+      price: 0.1,
+      description: "leg lamp from that one movie",
+      img: "./assets/lamp.jpg",
     },
-    uploadImage(event: any) {
-      let data = new FormData();
-      data.append("image", event.target.files[0]);
-      upload("609563dc3d8bd80018cd3a7c", data)
-        .then(() => this.$store.commit("alert/success", "Uploaded"))
-        .catch(() => this.$store.commit("alert/error", "Cant upload"));
+  }),
+  mounted() {
+    const script = document.createElement("script");
+    script.src =
+      "https://www.paypal.com/sdk/js?currency=EUR&client-id=AbCERCxxsl6xqgDzzBodK2029Cyl5zj5wjqfg4F0P1Ytq44Yn601zJj3G21cxrwKGcuKYWObbwpls51v";
+    script.addEventListener("load", this.setLoaded);
+    document.body.appendChild(script);
+  },
+  methods: {
+    setLoaded: function () {
+      this.loaded = true;
+      (window as any).paypal
+        .Buttons({
+          createOrder: (data:any, actions: any) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  description: this.product.description,
+                  amount: {
+                    currency_code: "EUR",
+                    value: this.product.price,
+                  },
+                },
+              ],
+            });
+          },
+          onApprove: async (data: any, actions: any) => {
+            const order = await actions.order.capture();
+            console.log(order);
+            this.paidFor = true;
+            this.$store.dispatch(
+              "alert/success",
+              "The payment was successfully completed",
+              { root: true }
+            );
+          },
+          onError: (err: any) => {
+            this.$store.dispatch(
+              "alert/error",
+              "An error occurred during payment",
+              { root: true }
+            );
+          },
+        })
+        .render(this.$refs.paypal);
     },
   },
 });

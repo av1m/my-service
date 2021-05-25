@@ -1,9 +1,13 @@
 import {Request, Response, Router} from 'express';
+import PaymentController from '../controllers/payment';
 import UserController from '../controllers/user';
 import {checkJwt} from '../middlewares/checkJwt';
 import {checkObjectId} from '../middlewares/checkObjectId';
 
 const router = Router();
+
+// Search
+router.post('/search', UserController.search);
 
 router.all('*', checkJwt);
 
@@ -15,16 +19,20 @@ router.all('/me/', (_req: Request, res: Response) =>
 // All users
 router.route('/').get([], UserController.listAll);
 
+// Upload picture
+router.post('/upload/', UserController.upload);
+
+// Payments
+router
+  .route('/payment')
+  .post([checkObjectId], PaymentController.add)
+  .get([], PaymentController.get);
+
 // User by ID
 router
   .route('/:id/')
   .get([checkObjectId], UserController.getOneById)
   .patch([checkObjectId], UserController.editUser)
   .delete([checkObjectId], UserController.deleteUser);
-
-// Search
-router.post('/search', UserController.search);
-
-router.post('/upload/', UserController.upload);
 
 export default router;

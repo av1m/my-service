@@ -10,7 +10,6 @@ router.all('*', checkJwt);
 
 router.route('/').post([], ServiceController.create);
 
-// User by ID
 router
   .route('/:id/')
   .get([checkObjectId], ServiceController.getById)
