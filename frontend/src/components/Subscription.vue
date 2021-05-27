@@ -21,7 +21,7 @@
           </div>
           <div v-else class="pa-4">
             You have not yet subscribed to any service, search or
-            <router-link to="/home">discover new services</router-link>
+            <router-link to="/timeline">discover new services</router-link>
           </div>
         </div>
       </v-col>

@@ -7,7 +7,7 @@
           <v-card class="rounded-lg">
             <v-card-text>
               <div class="text-center">
-                <v-img aspect-ratio="4" src="@/assets/logo.png"></v-img>
+                <v-img aspect-ratio="4" src="@/assets/logo.svg"></v-img>
               </div>
               <h1>Login</h1>
             </v-card-text>
@@ -126,7 +126,7 @@ export default Vue.extend({
   created: function () {
     if (this.isLogged)
       this.$router
-        .push((this.$route.query?.redirect || "/home") as RawLocation)
+        .push((this.$route.query?.redirect || "/timeline") as RawLocation)
         .catch((err) =>
           this.$store.dispatch(
             "alert/error",

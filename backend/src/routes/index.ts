@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import {NextFunction, Request, Response, Router} from 'express';
 import auth from './auth';
 import service from './service';
 import user from './user';
@@ -6,13 +6,13 @@ import tags from './tags';
 
 const routes = Router();
 
-// Only for debug
-routes.use('/', (req, res, next) => {
+// Middleware only for debug
+routes.use('/', (req: Request, res: Response, next: NextFunction) => {
   console.log('-------------------------');
   console.log(`${req.method} - ${req.url}`);
   console.log(req.body);
   console.log(req.headers);
-  console.log('#####');
+  console.log('=========================');
   next();
 });
 

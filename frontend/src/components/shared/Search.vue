@@ -32,7 +32,7 @@
       </v-list-item>
     </template>
     <template v-slot:item="{ item }">
-      <v-list-item link :to="'/user/' + item.user._id">
+      <v-list-item shaped dense ripple link :to="'/user/' + item.user._id">
         <v-list-item-avatar class="headline font-weight-light white--text">
           <v-img :src="loadPhoto(item.photo)" />
         </v-list-item-avatar>

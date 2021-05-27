@@ -3,11 +3,17 @@
     <v-navigation-drawer v-model="drawer" app>
       <v-list nav shaped>
         <v-list-item-group v-model="group" active-class="primary main--text">
-          <v-list-item to="/home">
+          <v-list-item to="/">
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/timeline" v-if="isLogged">
+            <v-list-item-icon>
+              <v-icon>mdi-timeline-text</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Timeline</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="/me" v-if="isLogged">
@@ -50,8 +56,8 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <router-link to="/home">
-          <v-img max-width="250" src="@/assets/logo.png" />
+        <router-link to="/">
+          <v-img max-width="250" src="@/assets/logo.svg" />
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>

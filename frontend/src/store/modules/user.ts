@@ -67,7 +67,7 @@ const user: Module<any, RootStore> = {
             root: true,
           });
           router.push(
-            (router.currentRoute.query?.redirect || "/home") as RawLocation
+            (router.currentRoute.query?.redirect || "/timeline") as RawLocation
           );
         },
         (error: any) => {

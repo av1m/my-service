@@ -7,7 +7,7 @@
           <v-card class="rounded-lg">
             <v-card-text>
               <div class="text-center">
-                <v-img aspect-ratio="4" src="@/assets/logo.png"></v-img>
+                <v-img aspect-ratio="4" src="@/assets/logo.svg"></v-img>
               </div>
               <h1>Register</h1>
             </v-card-text>
@@ -189,7 +189,7 @@ export default Vue.extend({
               this.$store.dispatch("alert/success", "User created!", {
                 root: true,
               });
-              this.$router.push("/home");
+              this.$router.push("/timeline");
             });
           }
         });

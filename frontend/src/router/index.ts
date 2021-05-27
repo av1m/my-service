@@ -1,13 +1,13 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 
-import Home from "@/components/Home.vue";
+import Timeline from "@/components/Timeline.vue";
 import Account from "@/components/Account.vue";
 import User from "@/components/User.vue";
 import AddService from "@/components/AddService.vue";
 import Login from "@/components/Login.vue";
 import Subscription from "@/components/Subscription.vue";
-import Guest from "@/components/Guest.vue";
+import Home from "@/components/Home.vue";
 import NotFound from "@/components/NotFound.vue";
 import store from "@/store/index";
 
@@ -20,25 +20,16 @@ store.commit("read");
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    name: "Guest",
-    component: Guest,
-  },
-  {
-    path: "/home",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/timeline",
+    name: "Timeline",
+    component: Timeline,
     meta: {
       requiresAuth: true,
     },
-  },
-  {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../components/About.vue"),
   },
   {
     path: "/me",

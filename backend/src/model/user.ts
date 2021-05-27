@@ -7,7 +7,6 @@ export interface IUser extends mongoose.Document {
   lastname?: string;
   email: string;
   password: string;
-  role: string;
   profile?: string;
   services?: [IService];
   payments?: [mongoose.Schema.Types.ObjectId];

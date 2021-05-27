@@ -5,7 +5,7 @@
 			<circle r="45.866328819380655" cx="-65.11632881938066" cy="23.75" fill="black" opacity="1" stroke-width="0" stroke="#4285f4" data-fill-palette-color="black" data-stroke-palette-color="primary" id="circle-0" class="circle-0" data-palette-color="black"></circle>
 		</mask>
 	</defs>
-	<rect id="background" fill="#ffffff" width="565.3101576387613" height="297.73265763876134" x="-0"></rect>
+	<rect id="background" fill="#ffffff" fill-opacity="0" width="565.3101576387613" height="297.73265763876134" x="-0"></rect>
 	<g transform="matrix(1,0,0,1,213.9826576387613,125.11632881938067)">
 		<g id="tight-bounds">
 			<g></g>

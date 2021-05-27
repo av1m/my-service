@@ -244,7 +244,7 @@ export default Vue.extend({
     redireftAfterSubmit2(promise: Promise<AxiosResponse>) {
       promise
         .then(() => {
-          this.$router.push("/home");
+          this.$router.push("/timeline");
           this.$store.dispatch("alert/success", "The photo has been added", {
             root: true,
           });
