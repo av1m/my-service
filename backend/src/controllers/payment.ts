@@ -1,8 +1,5 @@
 import User, {IUser} from '../model/user';
 import {Request, Response} from 'express';
-import {ObjectId} from 'mongodb';
-import {use} from 'chai';
-import {IService} from '../model/service';
 
 class PaymentController {
   static add = async (req: Request, res: Response) => {

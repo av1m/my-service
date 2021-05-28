@@ -16,7 +16,7 @@
     "nyc": "^15.1.0",
     "prettier": "2.2.1",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -38,19 +38,16 @@
     "ts-node-dev": "^1.1.6"
   },
   "scripts": {
-    "preinstall": "cp -u .env.example .env",
     "format:write": "npx prettier --write .",
     "format:check": "npx prettier --check .",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
     "tsc": "tsc",
     "run": "ts-node ./src/index.ts",
-    "start": "tsc && pm2 start pm2.config.js",
+    "start": "node dist/index.js",
     "nodemon": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
     "lint": "gts lint",
     "clean": "gts clean",
-    "compile": "tsc",
     "fix": "gts fix",
-    "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint"
   }
