@@ -1,7 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import store from "@/store/index";
 
-export const BACKEND_BASE_URL = "http://127.0.0.1:3000";
+export const BACKEND_BASE_URL =
+  process.env.BACKEND_BASE_URL || "http://127.0.0.1:3000/";
 
 const httpClient = axios.create({
   baseURL: BACKEND_BASE_URL,
