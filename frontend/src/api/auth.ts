@@ -8,12 +8,17 @@ const login = (payload: {
   password: string;
 }): Promise<AxiosResponse> => httpClient.post(`${END_POINT}/login`, payload);
 
+const register = (payload: {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+}): Promise<AxiosResponse> => httpClient.post(`${END_POINT}/register`, payload);
+
 const changePassword = (payload: {
   oldPassword: string;
   newPassword: string;
-}): Promise<AxiosResponse> => {
-  console.log(payload);
-  return httpClient.post(`${END_POINT}/change-password`, payload);
-};
+}): Promise<AxiosResponse> =>
+  httpClient.post(`${END_POINT}/change-password`, payload);
 
-export { login, changePassword };
+export { login, changePassword, register };

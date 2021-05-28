@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Search from "@/components/shared/Search.vue";
+import Search from "@/components/Search.vue";
 import { mapGetters } from "vuex";
 
 export default Vue.extend({

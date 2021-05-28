@@ -1,7 +1,7 @@
 import { Module } from "vuex";
 import store from "@/store/index";
 import { IUser, RootStore, ServiceState } from "../types";
-import { changePassword, login } from "@/api/auth";
+import { changePassword, login, register } from "@/api/auth";
 import { getSearch, getUser, updateUser, subscribeService } from "@/api/users";
 import router from "@/router";
 import { loginType } from "@/api/types";
@@ -74,6 +74,29 @@ const user: Module<any, RootStore> = {
           commit("loginFailure", error);
         }
       );
+    },
+    register(
+      { dispatch, commit },
+      payload: {
+        email: string;
+        password: string;
+        firstname: string;
+        lastname: string;
+      }
+    ) {
+      return new Promise<boolean>((resolve, reject) => {
+        register(payload)
+          .then((payload: AxiosResponse) => {
+            commit("loginSuccess", payload.data);
+            dispatch("alert/success", "The user has been registered", {
+              root: true,
+            });
+            resolve(true);
+          })
+          .catch(() => {
+            reject;
+          });
+      });
     },
     logout({ commit }) {
       commit("logout");

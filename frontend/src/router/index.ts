@@ -1,14 +1,14 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 
-import Timeline from "@/components/Timeline.vue";
-import Account from "@/components/Account.vue";
-import User from "@/components/User.vue";
+import Timeline from "@/views/Timeline.vue";
+import Account from "@/views/Account.vue";
+import User from "@/views/User.vue";
 import AddService from "@/components/AddService.vue";
-import Login from "@/components/Login.vue";
-import Subscription from "@/components/Subscription.vue";
-import Home from "@/components/Home.vue";
-import NotFound from "@/components/NotFound.vue";
+import Login from "@/views/Login.vue";
+import Subscription from "@/views/Subscription.vue";
+import Home from "@/views/Home.vue";
+import NotFound from "@/views/NotFound.vue";
 import store from "@/store/index";
 
 Vue.use(VueRouter);
@@ -64,7 +64,7 @@ const routes: Array<RouteConfig> = [
     path: "/signup",
     name: "Register",
     component: () =>
-      import(/* webpackChunkName: "signup" */ "../components/Register.vue"),
+      import(/* webpackChunkName: "signup" */ "../views/Register.vue"),
   },
   {
     path: "/subscription",
