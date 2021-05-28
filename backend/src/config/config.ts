@@ -2,6 +2,7 @@ import {connect} from 'mongoose';
 import dotenv = require('dotenv');
 
 dotenv.config();
+console.log(process.env);
 
 export default {
   jwtSecret: process.env.JWT_SECRET || 'TEST',

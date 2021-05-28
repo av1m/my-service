@@ -40,6 +40,7 @@ exports.InitiateMongoServer = void 0;
 var mongoose_1 = require("mongoose");
 var dotenv = require("dotenv");
 dotenv.config();
+console.log(process.env);
 exports.default = {
     jwtSecret: process.env.JWT_SECRET || 'TEST',
 };
