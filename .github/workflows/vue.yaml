@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Add .env
+        run: echo VUE_APP_BACKEND_BASE_URL="https://my-service-ts.herokuapp.com/" > .env
+
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
@@ -26,8 +29,6 @@ jobs:
 
       - run: npm ci
       - run: npm run build
-        env:
-          BACKEND_BASE_URL: "https://my-service-ts.herokuapp.com/"
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.3

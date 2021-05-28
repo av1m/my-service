@@ -10,7 +10,7 @@ const utils: Module<any, RootStore> = {
   getters: {
     loadPhoto: () => (photo: string): string => {
       if (!photo || photo.toLowerCase().startsWith("http")) return photo;
-      return BACKEND_BASE_URL + "/static/" + photo;
+      return BACKEND_BASE_URL + "static/" + photo;
     },
   },
 };
