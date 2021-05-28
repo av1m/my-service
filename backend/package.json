@@ -2,7 +2,8 @@
   "name": "my-service-api",
   "version": "0.1.0",
   "engines": {
-    "node": "14.x"
+    "node": "14.x",
+    "npm": "7.6.x"
   },
   "devDependencies": {
     "@types/chai": "^4.2.16",
