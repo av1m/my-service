@@ -22,6 +22,6 @@ app.use('/', routes);
 // Serve static files
 app.use('/static', express.static('uploads'));
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Server started on port 3000! 👂');
 });

@@ -1,6 +1,9 @@
 {
   "name": "my-service-api",
   "version": "0.1.0",
+  "engines": {
+    "node": "14.x"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.16",
     "@types/express": "^4.17.11",
@@ -29,6 +32,7 @@
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.6",
     "multer": "^1.4.2",
+    "pm2": "^4.5.6",
     "reflect-metadata": "^0.1.13",
     "ts-node-dev": "^1.1.6"
   },
@@ -38,7 +42,8 @@
     "format:check": "npx prettier --check .",
     "test": "mocha -r ts-node/register test/**/*.test.ts",
     "tsc": "tsc",
-    "start": "ts-node ./src/index.ts",
+    "run": "ts-node ./src/index.ts",
+    "start": "tsc && pm2 start pm2.config.js",
     "nodemon": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
     "lint": "gts lint",
     "clean": "gts clean",
