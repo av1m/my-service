@@ -1,5 +1,7 @@
-# Documentation my-servcice
-- [Documentation my-servcice](#documentation-my-servcice)
+![Logo](./frontend/src/assets/icon.svg)
+![my-service](./frontend/src/assets/text.svg)
+# Documentation my-service
+- [Documentation my-service](#documentation-my-service)
   - [Introduction](#introduction)
   - [Frontend](#frontend)
     - [Technologies](#technologies)
