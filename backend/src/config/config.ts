@@ -8,7 +8,11 @@ export default {
 };
 
 export const InitiateMongoServer = async () => {
-  const MONGOURI = `mongodb+srv://${process.env.DB_CREDENTIALS}`;
+  const MONGOURI = process.env.DB_CREDENTIALS;
+
+  if (!MONGOURI) {
+    throw new Error('MONGOURI is not defined ❌');
+  }
 
   try {
     await connect(MONGOURI, {

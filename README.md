@@ -1,6 +1,8 @@
 ![Logo](./frontend/src/assets/icon.svg)
 ![my-service](./frontend/src/assets/text.svg)
 # Documentation my-service
+
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
 - [Documentation my-service](#documentation-my-service)
   - [Introduction](#introduction)
   - [Frontend](#frontend)
@@ -291,7 +293,11 @@ Les modèles (schéma de base de données) sont stockés dans le répertoire [ `
 Ainsi, à chaque fois que nous démarrons le serveur, les "migrations" (irréels car nous sommes en MongoDB) sont réalisés. Donc, aucun script ou commande SQL est nécessaire pour configurer la base de données. Il faut seulement la ligne suivante dans le fichier `.env`
 
 ```bash
-DB_CREDENTIALS=user:password@host/ # Il faut remplacer user password et host
+# Il faut remplacer user password et host
+# Il faut egalement remplacer mongodb:// par mongodb+srv:// si un DNS est utilisé
+# Voir la documentation https://docs.mongodb.com/manual/reference/connection-string/
+
+DB_CREDENTIALS=mongodb://user:password@host/
 ```
 
 #### Exemple de document
